@@ -1,4 +1,14 @@
 const Tabs = (topics) => {
+   const tab = document.createElement("div");
+   tab.classList.add("topics")
+
+   topics.forEach(topicText => {
+    const tabList = document.createElement("div");
+    tabList.textContent = topicText;
+    tab.appendChild(tabList);
+   })
+
+   return tab;
   // TASK 3
   // ---------------------
   // Implement this function which takes an array of strings ("topics") as its only argument.
@@ -23,6 +33,7 @@ const tabsAppender = (selector) => {
   // Find the array of topics inside the response, and create the tabs using the Tabs component.
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
+  document.querySelector(selector).appendChild(Tabs(`http://localhost:5001/api/topics`))
 }
 
 export { Tabs, tabsAppender }
