@@ -1,9 +1,13 @@
-const Tabs = (topics) => {
+import axios from "axios";
+import { topics } from "../mocks/data";
+
+  const Tabs = (topics) => {
    const tab = document.createElement("div");
    tab.classList.add("topics")
 
-   topics.forEach(topicText => {
+   topics.forEach((topicText) => {
     const tabList = document.createElement("div");
+    tabList.classList.add("tab")
     tabList.textContent = topicText;
     tab.appendChild(tabList);
    })
@@ -25,6 +29,8 @@ const Tabs = (topics) => {
   //
 }
 
+
+
 const tabsAppender = (selector) => {
   // TASK 4
   // ---------------------
@@ -33,7 +39,13 @@ const tabsAppender = (selector) => {
   // Find the array of topics inside the response, and create the tabs using the Tabs component.
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
-  document.querySelector(selector).appendChild(Tabs(`http://localhost:5001/api/topics`))
+  axios.get(`http://localhost:5001/api/topics/`)
+  .then(resp => {
+    const topics = resp.data.topics;
+    const tabs = Tabs(topics);
+    document.querySelector(selector).appendChild(tabs);
+  })
+  .catch(err => console.error(err));
 }
 
 export { Tabs, tabsAppender }
