@@ -1,4 +1,21 @@
 const Card = (article) => {
+  const card = document.createElement("div");
+  const heading = document.createElement("div");
+  const author = docment.createElement("div");
+  const authorPhoto = document.createElement("div");
+  const authorImg = document.createElement("img");
+  const authorName = document.createElement("span");
+
+  card.classList.add("card");
+  heading.classList.add("headline");
+  author.classList.add("author");
+  authorPhoto.classList.add("img-container");
+
+  authorImg.src = article.authorPhoto;
+  heading.textContent = article.headline;
+  authorName.textContent = "By " + article.authorName
+
+
   // TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
@@ -17,6 +34,7 @@ const Card = (article) => {
   //   </div>
   // </div>
   //
+
 }
 
 const cardAppender = (selector) => {
