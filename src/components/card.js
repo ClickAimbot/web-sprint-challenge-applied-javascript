@@ -70,9 +70,9 @@ const cardAppender = (selector) => {
           const subArticles = articles[category];
 
           subArticles.forEach(subArticle => {
-            const cardElem = Card(subArticle);
-            document.querySelector(selector).appendChild(cardElem);
-          });
+            const cardElem = Card(subArticle)
+            document.querySelector(selector).appendChild(cardElem)
+          })
         }
       }
     })
