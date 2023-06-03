@@ -1,19 +1,33 @@
+import axios from 'axios'
+
 const Card = (article) => {
   const card = document.createElement("div");
-  const heading = document.createElement("div");
-  const author = docment.createElement("div");
+  const headline = document.createElement("div");
+  const author = document.createElement("div");
   const authorPhoto = document.createElement("div");
   const authorImg = document.createElement("img");
   const authorName = document.createElement("span");
 
   card.classList.add("card");
-  heading.classList.add("headline");
+  headline.classList.add("headline");
   author.classList.add("author");
   authorPhoto.classList.add("img-container");
 
   authorImg.src = article.authorPhoto;
-  heading.textContent = article.headline;
-  authorName.textContent = "By " + article.authorName
+  headline.textContent = article.headline;
+  authorName.textContent = `By ${article.authorName}`
+
+  card.appendChild(headline);
+  card.appendChild(author);
+  author.appendChild(authorPhoto);
+  authorPhoto.appendChild(authorImg);
+  author.appendChild(authorName);
+
+  card.addEventListener("click", () => {
+    console.log(article.headline);
+  })
+
+  return card;
 
 
   // TASK 5
@@ -46,6 +60,25 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+  // Obtain articles from the API endpoint
+  axios.get('http://localhost:5001/api/articles')
+    .then(resp => {
+      const articles = resp.data.articles;
+
+      for (const category in articles) {
+        if (Array.isArray(articles[category])) {
+          const subArticles = articles[category];
+
+          subArticles.forEach(subArticle => {
+            const cardElem = Card(subArticle);
+            document.querySelector(selector).appendChild(cardElem);
+          });
+        }
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    })
 }
 
 export { Card, cardAppender }
